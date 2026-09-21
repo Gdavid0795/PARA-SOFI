@@ -1,12 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Pequeño efecto de entrada: los girasoles aparecen uno tras otro.
   document.querySelectorAll(".sunflower").forEach((flower, i) => {
     flower.animate(
       [
-        { opacity: 0, transform: "scale(.2) rotate(-25deg)" },
-        { opacity: 1, transform: "scale(1) rotate(0)" }
+        { opacity: 0, transform: "scale(0) rotate(-45deg)" },
+        { opacity: 1, transform: "scale(1) rotate(0deg)" }
       ],
-      { duration: 700, delay: 500 + i * 130, fill: "both", easing: "cubic-bezier(.2,.8,.2,1)" }
+      { 
+        duration: 800, 
+        delay: 400 + i * 150, 
+        fill: "both", 
+        easing: "cubic-bezier(0.175, 0.885, 0.32, 1.275)" // Efecto rebote tierno
+      }
     );
   });
 });
