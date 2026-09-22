@@ -5,74 +5,181 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Para Sofi ✨</title>
   <style>
-    /* Estilos generales de la página */
+    /* Estilos globales */
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; font-family: "Trebuchet MS", system-ui, sans-serif; }
     body {
-      margin: 0;
-      padding: 40px 20px;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #ffffff;
-      color: #1a1a1a;
-      line-height: 1.8;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: radial-gradient(circle at top, #fff7d5, #f4d98c 70%, #dfbb63);
     }
 
-    .container {
-      max-width: 600px;
-      margin: 0 auto;
+    /* Tarjeta principal */
+    .card {
+      width: min(92vw, 430px);
+      min-height: 92vh;
+      max-height: 94vh;
+      padding: 34px 22px 26px;
+      border-radius: 32px;
+      background: linear-gradient(145deg, #fff6cf, #ffe7a3);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      overflow: hidden;
+      position: relative;
     }
 
-    p {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
+    /* Mensajes */
+    .message { color: #29251d; font-size: 19px; line-height: 1.35; max-width: 360px; animation: appear 1.2s ease both; }
+    .message p { margin: 4px 0; }
+    .dedication { font-weight: 700; margin-top: 14px !important; }
+
+    /* Ramo de Girasoles */
+    .bouquet {
+      position: relative;
+      width: 330px;
+      height: 390px;
+      flex: none;
+      animation: rise 1.5s .3s ease both, float 3s ease-in-out infinite alternate 1.8s;
+    }
+    .stems {
+      position: absolute; left: 50%; bottom: 25px; width: 10px; height: 235px;
+      background: #35743d; border-radius: 10px; transform: translateX(-50%) rotate(1deg);
+      box-shadow: 28px 25px 0 -2px #3f7b40, -30px 32px 0 -2px #3b713b;
+    }
+    .sunflower {
+      position: absolute; width: 100px; height: 100px; border-radius: 50%;
+      background: repeating-conic-gradient(#f6b915 0 9deg, #ffd13b 9deg 18deg);
+      z-index: 3; filter: drop-shadow(0 5px 3px rgba(0,0,0,0.13));
+    }
+    .sunflower span {
+      position: absolute; inset: 22px; border-radius: 50%;
+      background: radial-gradient(circle, #6b4019 0 45%, #4a2a13 46% 100%);
+      border: 4px solid #9b6423;
+    }
+    .s1 { left: 115px; top: 20px; }
+    .s2 { left: 45px; top: 82px; transform: scale(.78); }
+    .s3 { left: 182px; top: 90px; transform: scale(.82); }
+    .s4 { left: 95px; top: 120px; transform: scale(.72); }
+    .s5 { left: 165px; top: 150px; transform: scale(.64); }
+
+    .leaf {
+      position: absolute; width: 72px; height: 38px; background: #2f7940;
+      border: 3px solid #225a2f; border-radius: 100% 0 100% 0; z-index: 2;
+    }
+    .l1 { left: 52px; top: 185px; transform: rotate(-35deg); }
+    .l2 { right: 45px; top: 172px; transform: scaleX(-1) rotate(-30deg); }
+    .l3 { left: 62px; top: 250px; transform: rotate(-25deg) scale(.85); }
+    .l4 { right: 50px; top: 235px; transform: scaleX(-1) rotate(-25deg) scale(.85); }
+
+    .wrap {
+      position: absolute; left: 65px; bottom: 5px; width: 200px; height: 145px;
+      background: linear-gradient(150deg, #d99b55, #f0c27d 55%, #c9823c);
+      clip-path: polygon(10% 0, 90% 0, 75% 100%, 25% 100%); z-index: 4;
+      filter: drop-shadow(0 5px 4px rgba(0,0,0,0.13));
+    }
+    .ribbon {
+      position: absolute; left: 50%; bottom: 73px; width: 58px; height: 20px;
+      border: 5px solid #8b5425; border-radius: 50%; z-index: 5;
+      transform: translateX(-50%) rotate(8deg);
     }
 
-    .bold-text {
-      font-weight: bold;
-      font-size: 1.3rem;
-    }
+    /* Sección final */
+    .final { color: #5c421e; font-size: 17px; margin-top: -3px; animation: appear 1.2s 1s ease both; }
+    .final p { margin: 0 0 4px; }
+    .final strong { font-size: 27px; color: #c87816; text-shadow: 1px 2px 0 rgba(255, 255, 255, 0.27); }
 
-    /* Reproductor de música personalizado */
+    /* Reproductor de audio */
     .music-player {
-      margin-top: 30px;
-      padding: 15px;
-      background-color: #f8f9fa;
+      margin-top: 10px;
+      padding: 8px 12px;
+      background: rgba(255, 255, 255, 0.5);
       border-radius: 12px;
       border: 1px solid #e9ecef;
-      display: inline-block;
     }
+    audio { height: 32px; width: 220px; }
 
-    audio {
-      outline: none;
+    /* Animaciones */
+    @keyframes appear { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: none; } }
+    @keyframes rise { from { opacity: 0; transform: translateY(35px) scale(.75); } to { opacity: 1; transform: translateY(0) scale(.9); } }
+    @keyframes float { from { transform: scale(.9) translateY(0); } to { transform: scale(.92) translateY(-8px); } }
+
+    @media(max-height: 700px) {
+      .card { min-height: 94vh; padding-top: 20px; }
+      .bouquet { transform: scale(.7); margin: -20px 0; }
+      .message { font-size: 17px; }
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <p>¡Gracias por llenar mis días de tantas risas y momentos bonitos! ✨💛</p>
-    
-    <p>Eres una amiga increíble y muy especial para mí. 🥰</p>
-    
-    <p>¡Este ramito brillante es con mucho cariño para ti! 🌻✨</p>
-    
-    <p>Y nunca lo olvides...</p>
-    
-    <p class="bold-text">¡Kachow! ⚡ ¡A brillar siempre! 🌟</p>
+  <div class="card">
+    <!-- Contenido del mensaje -->
+    <div class="message">
+      <p class="dedication">Para Sofi ✨</p>
+      <p>¡Gracias por llenar mis días de tantas risas y momentos bonitos! 💛</p>
+      <p>Eres una amiga increíble y muy especial para mí. 🥰</p>
+    </div>
 
-    <!-- Sección del reproductor de música -->
-    <div class="music-player">
-      <p style="font-size: 0.9rem; margin-bottom: 8px;">🎵 Reproducir canción:</p>
-      <audio controls autoplay loop>
-        <source src="cancion.mp3" type="audio/mpeg">
-        Tu navegador no soporta el reproductor de audio.
-      </audio>
+    <!-- Ramo animado con girasoles -->
+    <div class="bouquet">
+      <div class="stems"></div>
+      <div class="leaf l1"></div>
+      <div class="leaf l2"></div>
+      <div class="leaf l3"></div>
+      <div class="leaf l4"></div>
+      <div class="sunflower s1"><span></span></div>
+      <div class="sunflower s2"><span></span></div>
+      <div class="sunflower s3"><span></span></div>
+      <div class="sunflower s4"><span></span></div>
+      <div class="sunflower s5"><span></span></div>
+      <div class="wrap"></div>
+      <div class="ribbon"></div>
+    </div>
+
+    <!-- Cierre y reproductor -->
+    <div class="final">
+      <p>¡Este ramito brillante es con mucho cariño para ti! 🌻✨</p>
+      <p><strong>¡Kachow! ⚡</strong></p>
+      <p>¡A brillar siempre! 🌟</p>
+      
+      <div class="music-player">
+        <audio controls autoplay loop>
+          <source src="cancion.mp3" type="audio/mpeg">
+          Tu navegador no soporta el audio.
+        </audio>
+      </div>
     </div>
   </div>
 
   <script>
-    // Comprobación rápida para confirmar que el audio esté cargado
-    const audio = document.querySelector('audio');
-    audio.addEventListener('error', () => {
-      console.log("No se encontró el archivo 'cancion.mp3' en la misma carpeta.");
+    // Animación de entrada con rebote para los girasoles
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".sunflower").forEach((flower, i) => {
+        flower.animate(
+          [
+            { opacity: 0, transform: "scale(0) rotate(-45deg)" },
+            { opacity: 1, transform: "scale(1) rotate(0deg)" }
+          ],
+          { 
+            duration: 800, 
+            delay: 400 + i * 150, 
+            fill: "both", 
+            easing: "cubic-bezier(0.175, 0.885, 0.32, 1.275)" 
+          }
+        );
+      });
+
+      const audio = document.querySelector('audio');
+      audio.addEventListener('error', () => {
+        console.log("No se encontró el archivo 'cancion.mp3' en la misma carpeta.");
+      });
     });
   </script>
 
